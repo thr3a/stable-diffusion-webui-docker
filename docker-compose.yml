@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    build: ./docker
+    image: thr3a/sd-ui:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./models:/app/stable-diffusion-webui/models
+      - ./ui-config.json:/app/stable-diffusion-webui/ui-config.json
+    command: python webui.py --port 3000 --listen --precision full --no-half --deepdanbooru
+    deploy:
+      resources:
+        reservations:
+          devices:
+              - driver: nvidia
+                device_ids: ['0']
+                capabilities: [gpu]
