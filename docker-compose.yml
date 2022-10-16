@@ -9,7 +9,10 @@ services:
     volumes:
       - ./models:/app/stable-diffusion-webui/models
       - ./ui-config.json:/app/stable-diffusion-webui/ui-config.json
-    command: python webui.py --port 3000 --listen --precision full --no-half --deepdanbooru
+      - ./cache:/root/.cache
+      - ./embeddings:/app/stable-diffusion-webui/embeddings
+      - ./textual_inversion:/app/stable-diffusion-webui/textual_inversion
+    command: python webui.py --port 3000 --listen --precision full --no-half --deepdanbooru --xformers
     deploy:
       resources:
         reservations:
